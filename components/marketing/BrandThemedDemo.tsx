@@ -30,15 +30,15 @@ const DEFAULT_BRAND: Brand = {
 
 const SAMPLE_STORE_ITEMS = [
   {
-    name: "Gloss Revival Mask",
+    name: "Recovery Ritual Kit",
     price: "$38",
-    copy: "Recommended after color services.",
+    copy: "Recommended after high-value services.",
     image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
   },
   {
-    name: "Scalp Reset Serum",
+    name: "Aftercare Serum",
     price: "$42",
-    copy: "Attach to refresh appointments.",
+    copy: "Attach to refresh appointments and packages.",
     image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80",
   },
 ] as const;
@@ -47,16 +47,16 @@ const MODULES = [
   {
     key: "dashboard",
     label: "Dashboard",
-    title: "Your salon command center.",
+    title: "Your business command center.",
     eyebrow: "Owner dashboard",
-    body: "The owner view Mark built: wallet, store, openings, reviews, assistant reports, and the next best action for the day.",
+    body: "The owner view connects wallet, store, openings, reviews, assistant reports, and the next best action for the day.",
   },
   {
     key: "wallet",
     label: "Wallet",
     title: "Lower-fee checkout.",
     eyebrow: "Wallet checkout",
-    body: "Client wallet loads, service checkout, and in-salon retail checkout settle to the salon's own Stripe account.",
+    body: "Client wallet loads, service checkout, and retail checkout settle to the business's own Stripe account.",
   },
   {
     key: "store",
@@ -82,16 +82,16 @@ const ASSISTANTS = [
     label: "Financial Assistant",
     metric: "$1,840 margin lift",
     status: "Payroll draft ready",
-    report: "Retail attach rate rose to 31%. Move gloss add-ons into checkout prompts and review Alex's commission mix before Friday payroll.",
-    messages: ["Can we afford a Tuesday promotion?", "Yes. Keep the offer service-only and cap it at 12 appointments to protect margin."],
+    report: "Retail attach rate rose to 31%. Move aftercare add-ons into checkout prompts and review Alex's commission mix before Friday payroll.",
+    messages: ["Can we afford a weekday promotion?", "Yes. Keep the offer service-only and cap it at 12 appointments to protect margin."],
   },
   {
     key: "inventory",
     label: "Inventory Assistant",
     metric: "4 low-stock items",
     status: "2 reorder drafts",
-    report: "Lash adhesive and toner 7N are below threshold. Gloss trays are healthy for six weeks based on recent checkout movement.",
-    messages: ["Which products need attention today?", "Lash adhesive first. It is below threshold and used faster than forecast this week."],
+    report: "Two retail products and one backbar supply are below threshold. Membership kit inventory is healthy for six weeks based on recent checkout movement.",
+    messages: ["Which products need attention today?", "The aftercare serum first. It is below threshold and used faster than forecast this week."],
   },
   {
     key: "reviews",
@@ -106,15 +106,15 @@ const ASSISTANTS = [
     label: "Industry Intelligence",
     metric: "1-page brief",
     status: "June report ready",
-    report: "Competitors are packaging maintenance gloss appointments with scalp care. Two nearby salons are pushing weekday color refresh offers.",
-    messages: ["What should we try this month?", "Test a weekday gloss refresh bundle and measure rebooking within 14 days."],
+    report: "Competitors are packaging maintenance visits with aftercare. Two nearby businesses are pushing weekday refresh offers.",
+    messages: ["What should we try this month?", "Test a weekday refresh bundle and measure rebooking within 14 days."],
   },
   {
     key: "receptionist",
     label: "Receptionist Assistant",
     metric: "23 requests handled",
     status: "3 bookings pending",
-    report: "Missed-call follow-up recovered two consultations. Three booking requests need staff assignment approval.",
+    report: "Missed-call follow-up recovered two consultations. Three appointment requests need staff assignment approval.",
     messages: ["Any missed calls?", "Two missed calls were answered by text and one converted to a consultation request."],
   },
 ] as const;
@@ -414,9 +414,9 @@ export default function BrandThemedDemo() {
   const primary = brand.primaryColor;
   const accent = brand.accentColor;
   const activeModule = MODULES.find((module) => module.key === moduleKey) ?? MODULES[0];
-  const demoSalon = useMemo(() => encodeURIComponent(brand.name || "[Business Name]"), [brand.name]);
-  const walletHref = `/wallet?demo=1&salon=${demoSalon}&client=Demo%20Customer%2FPatient`;
-  const storeHref = `/store?demo=1&salon=${demoSalon}`;
+  const demoBusiness = useMemo(() => encodeURIComponent(brand.name || "[Business Name]"), [brand.name]);
+  const walletHref = `/wallet?demo=1&salon=${demoBusiness}&client=Demo%20Customer%2FPatient`;
+  const storeHref = `/store?demo=1&salon=${demoBusiness}`;
 
   return (
     <div className="mx-auto w-full max-w-5xl">
@@ -454,7 +454,7 @@ export default function BrandThemedDemo() {
               <LogoMark brand={brand} />
               <div>
                 <p className="font-serif text-xl font-medium tracking-wide">{brand.name}</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-text-muted">Powered by JIDOKA Cosmetics OS</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-text-muted">Powered by JIDOKA Beauty &amp; Wellness OS</p>
               </div>
             </div>
             <p className="text-xs uppercase tracking-[0.16em] text-text-secondary">Owner dashboard</p>

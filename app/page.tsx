@@ -1,18 +1,22 @@
 import SavingsCalculator from "@/components/marketing/SavingsCalculator";
 import BrandThemedDemo from "@/components/marketing/BrandThemedDemo";
 import DemoCTA from "@/components/marketing/DemoCTA";
+import Image from "next/image";
+
+const BEAUTY_WELLNESS_OS_URL = "https://jidokagroup.com/operating-systems#beauty-wellness";
+const DIAGNOSTIC_URL = "https://jidokagroup.com/scan/quiz";
 
 const BOTTLENECKS = [
   "Merchant fees skimming every sale",
   "Too many disconnected tech tools",
-  "Inventory always running low",
+  "Retail and supply inventory always running low",
   "Payroll & commission math",
   "Falling behind on social media",
-  "Hard to keep up with trends",
+  "Hard to keep up with local trends",
   "Lapsed clients quietly slipping away",
-  "Upsells the team forgets to make",
+  "Add-ons and packages the team forgets to mention",
   "Last-minute cancellations left unfilled",
-  "Retail & at-home sales left on the table",
+  "Retail, memberships, and at-home sales left on the table",
   "Complaints with nowhere to go",
   "Google reviews going unanswered",
   "Reviews scattered across sites",
@@ -35,11 +39,11 @@ const PILLARS: {
       },
       {
         title: "One customizable platform",
-        body: "Every tool in a single place — no relearning ten apps. Add or remove modules so the OS fits your salon, not the other way around.",
+        body: "Every tool in a single place. Add or remove modules so the OS fits your spa, salon, medspa, or wellness clinic.",
       },
       {
-        title: "Upsell cues",
-        body: "Your team is notified the moment a client is a strong candidate for an upgrade, add-on, or retail product.",
+        title: "Service and retail cues",
+        body: "Your team is notified when a client is a strong candidate for an upgrade, package, membership, or retail product.",
       },
     ],
   },
@@ -57,7 +61,7 @@ const PILLARS: {
       },
       {
         title: "Reviews Assistant",
-        body: "Scans Google Business and old booking services, imports reviews into the OS, writes unique replies to positive reviews, escalates reviews under 3 stars with a professional manager follow-up, and notifies the assigned owner or manager.",
+        body: "Scans Google Business and booking platforms, imports reviews into the OS, drafts thoughtful replies, escalates sensitive reviews, and notifies the right owner or manager.",
       },
     ],
   },
@@ -67,7 +71,7 @@ const PILLARS: {
     items: [
       {
         title: "Receptionist Assistant",
-        body: "Supports missed calls, booking requests, and client questions so the front desk has fewer interruptions during services.",
+        body: "Supports missed calls, appointment requests, consultation questions, and client follow-up so the front desk has fewer interruptions.",
       },
       {
         title: "Re-engagement workflows",
@@ -75,41 +79,40 @@ const PILLARS: {
       },
       {
         title: "Last-minute fills",
-        body: "Clients opt in to be alerted of openings within 24 hours, by app or SMS — so cancellations don't stay empty.",
+        body: "Clients opt in to be alerted of openings within 24 hours by app or SMS, so cancellations do not stay empty.",
       },
     ],
   },
 ];
 
 const LAUNCH_STEPS = [
-  "Theme the booking experience to your brand.",
-  "Start free 7 day trial.",
-  "Connect with implementation specialist.",
-  "Import services, staff, hours, and checkout rules.",
-  "Implement assistants one by one, or all at once if you're ready.",
+  "Map the business through the Blueprint Diagnostic.",
+  "Theme the booking, client, and owner experience to your brand.",
+  "Connect your current tools, services, staff, hours, and checkout rules.",
+  "Implement assistants one by one with a JIDOKA specialist.",
+  "Train the team and refine the system as the business evolves.",
 ];
 
 const ASSISTANT_ROBOTS = [
-  { name: "Financial", role: "Payroll + margin", color: "#4B7A63" },
-  { name: "Inventory", role: "Stock + reorder", color: "#9A7B4F" },
-  { name: "Reviews", role: "Reputation", color: "#B05B49" },
-  { name: "Intelligence", role: "Market briefings", color: "#45657C" },
-  { name: "Receptionist", role: "Booking support", color: "#7A5C91" },
+  { name: "Financial", role: "Payroll + margin", color: "#3041A5" },
+  { name: "Inventory", role: "Stock + reorder", color: "#0F766E" },
+  { name: "Reviews", role: "Reputation", color: "#E8442E" },
+  { name: "Intelligence", role: "Market briefings", color: "#E8971F" },
+  { name: "Receptionist", role: "Booking support", color: "#4A5ABF" },
 ];
 
 const TEAM_CUES = [
-  "Suggest a facial, Sandra is overdue.",
-  "It's been 4 months since Mary's last IPL. Analyze skin and offer 10% off another treatment.",
-  "John bought shampoo 3 months ago. Ask if he needs more.",
+  "Sandra is overdue. Suggest the right follow-up service.",
+  "Mary has not rebooked in 4 months. Send a personalized offer.",
+  "John bought aftercare 3 months ago. Ask if he needs a refill.",
 ];
 
 const CLIENT_NOTIFICATIONS = [
-  "Last minute opening alert: 2:30 PM, you're due for a lash refill.",
+  "Last-minute opening alert: 2:30 PM, matched to your usual service.",
   "Did you leave a review yet? Receive a free gift if you leave a review within 24 hours.",
-  "Wallet balance low, you're only 50 stars away from your next redeemable gift. Let's reload now.",
+  "Wallet balance low. You are 50 points away from your next reward.",
 ];
 
-const SUBSCRIPTION_URL = process.env.NEXT_PUBLIC_STRIPE_SUBSCRIPTION_URL || "/settings/stripe";
 const CRYSTAL_CALENDLY_URL = process.env.NEXT_PUBLIC_CRYSTAL_CALENDLY_URL || "https://calendly.com/hello-barebranding/30min";
 
 function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
@@ -120,11 +123,11 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="text-[11px] uppercase tracking-[0.24em] text-text-muted">{children}</p>;
 }
 
-function TrialButton({ label = "Start free 7 day trial" }: { label?: string }) {
+function TrialButton({ label = "Map my business systems" }: { label?: string }) {
   return (
     <a
-      href={SUBSCRIPTION_URL}
-      className="inline-flex rounded-sm bg-gradient-brand px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
+      href={DIAGNOSTIC_URL}
+      className="inline-flex rounded-md bg-gradient-brand px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-all hover:brightness-110"
     >
       {label}
     </a>
@@ -186,7 +189,7 @@ function FloatingCuePhone() {
           <div className="mx-auto mb-5 h-1.5 w-16 rounded-full bg-border" />
           <div className="rounded-2xl border border-border bg-white/80 p-4 shadow-sm backdrop-blur-sm">
             <p className="text-[11px] uppercase tracking-[0.16em] text-text-muted">Owner dashboard</p>
-            <h4 className="mt-2 font-serif text-2xl font-medium">Today&apos;s floor</h4>
+            <h4 className="mt-2 font-serif text-2xl font-medium">Today&apos;s schedule</h4>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <div className="rounded-xl bg-white p-3 shadow-sm">
                 <p className="text-[10px] uppercase tracking-[0.12em] text-text-muted">Openings</p>
@@ -211,7 +214,7 @@ function FloatingCuePhone() {
             </div>
           </div>
           <div className="mt-4 space-y-2">
-            {["Reorder lash adhesive", "Approve review reply", "Fill 2:30 PM opening"].map((task) => (
+            {["Reorder aftercare serum", "Approve review reply", "Fill 2:30 PM opening"].map((task) => (
               <div key={task} className="rounded-xl border border-border bg-white/75 px-3 py-2 text-xs text-text-secondary shadow-sm">
                 {task}
               </div>
@@ -260,8 +263,8 @@ function PillarVisual({ type }: { type: PillarVisualType }) {
             <div className="rounded-md border border-border bg-surface p-4">
               <p className="text-[11px] uppercase tracking-[0.16em] text-text-muted">Finance</p>
               <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                Retail attach rate rose to 31%, but Tuesday color appointments are under capacity. Recommended move:
-                test a weekday gloss refresh bundle and measure rebooking within 14 days.
+                Retail attach rate rose to 31%, but Tuesday appointment capacity is underused. Recommended move:
+                test a weekday refresh bundle and measure rebooking within 14 days.
               </p>
             </div>
             <div className="rounded-md border border-border bg-surface p-4">
@@ -273,7 +276,7 @@ function PillarVisual({ type }: { type: PillarVisualType }) {
             <div className="rounded-md border border-border bg-surface p-4">
               <p className="text-[11px] uppercase tracking-[0.16em] text-text-muted">Industry intelligence</p>
               <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                Nanoblading is searched online 40% more than Microblading. Suggest offering this service as the trends are shifting.
+                A nearby competitor is packaging seasonal refresh appointments. Suggest testing a limited bundle and tracking conversion.
               </p>
             </div>
             <div className="rounded-md border border-border bg-surface p-4">
@@ -306,7 +309,7 @@ function PillarVisual({ type }: { type: PillarVisualType }) {
       <div>
         <p className="font-serif text-2xl font-medium">The client-facing home screen keeps them coming back.</p>
         <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-          Clients see openings, review rewards, wallet reminders, and loyalty progress in the same mobile dashboard
+          Clients see openings, rewards, wallet reminders, and loyalty progress in the same mobile dashboard
           they use to book and pay.
         </p>
       </div>
@@ -318,19 +321,22 @@ export default function JidokaLandingPage() {
   return (
     <main>
       {/* Top bar */}
-      <header className="border-b border-border">
-        <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-5">
-          <span className="font-serif text-lg tracking-wide">
-            JIDOKA <span className="text-text-secondary">Cosmetics OS</span>
-          </span>
+      <header className="border-b border-border bg-white/85 backdrop-blur">
+        <div className="max-w-6xl mx-auto flex h-20 items-center justify-between px-5">
+          <a href="https://jidokagroup.com" className="flex items-center gap-3" aria-label="JIDOKA Group">
+            <Image src="/jidoka-group-logo.png" alt="JIDOKA Group" width={220} height={66} className="h-10 w-auto" priority />
+            <span className="hidden border-l border-border pl-3 text-sm font-semibold text-primary sm:inline">
+              Beauty &amp; Wellness OS
+            </span>
+          </a>
           <div className="flex items-center gap-5">
-            <a href="/about" className="hidden text-[12px] uppercase tracking-[0.14em] text-text-secondary hover:text-text-primary sm:inline">
-              About
+            <a href={BEAUTY_WELLNESS_OS_URL} className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-text-secondary hover:text-primary sm:inline">
+              Beauty &amp; Wellness OS
             </a>
-            <a href="/account" className="hidden text-[12px] uppercase tracking-[0.14em] text-text-secondary hover:text-text-primary sm:inline">
+            <a href="/account" className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-text-secondary hover:text-primary sm:inline">
               Sign in
             </a>
-            <DemoCTA label="Start my upgrade" variant="outline" />
+            <DemoCTA label="Map my system" variant="outline" />
           </div>
         </div>
       </header>
@@ -338,21 +344,21 @@ export default function JidokaLandingPage() {
       {/* Hero */}
       <Section className="pt-16 pb-10 text-center sm:pt-24">
         <div className="mx-auto max-w-3xl">
-          <Eyebrow>The operating system for modern cosmetics businesses</Eyebrow>
-          <h1 className="mt-5 font-serif text-5xl font-medium leading-[1.05] tracking-tight sm:text-7xl">
-            Less Stress, More Profit, Happier Clients
+          <Eyebrow>Beauty &amp; Wellness OS by JIDOKA Group</Eyebrow>
+          <h1 className="mt-5 font-serif text-5xl font-bold leading-[1.05] sm:text-7xl">
+            One operating layer for the business behind the care.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-text-secondary">
-            JIDOKA Cosmetics Operating System gives you an assistant for every obstacle- wallet checkout,
-            inventory, payroll, marketing, reviews, and retention in one customizable platform.
+            Built for spas, salons, medspas, and wellness clinics that need booking, client follow-up,
+            inventory, payroll, marketing, reviews, payments, and retention in one connected system.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <DemoCTA label="Start my salon upgrade" variant="primary" />
+            <DemoCTA label="Map my Beauty & Wellness OS" variant="primary" />
             <a
-              href="#calculator"
-              className="rounded-sm border border-text-primary/30 px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-text-primary transition-colors hover:bg-black/[0.04]"
+              href={BEAUTY_WELLNESS_OS_URL}
+              className="rounded-md border border-text-primary/30 px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-text-primary transition-colors hover:border-primary hover:text-primary"
             >
-              Calculate my savings
+              View Beauty &amp; Wellness OS
             </a>
           </div>
         </div>
@@ -363,16 +369,16 @@ export default function JidokaLandingPage() {
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <Eyebrow>The daily grind</Eyebrow>
           <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">
-            You didn&apos;t open a salon to feel exhausted.
+            You did not build a beauty or wellness business to chase disconnected tools.
           </h2>
           <p className="mt-4 leading-relaxed text-text-secondary">
-            The uphill battle that quiently drains your margins, time, and energy - every. single. week.
+            The work is already personal. The systems behind it should not drain your margin, time, and energy every week.
           </p>
         </div>
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-x-10 gap-y-3 sm:grid-cols-2">
           {BOTTLENECKS.map((b) => (
             <div key={b} className="flex items-baseline gap-3 border-b border-border py-3">
-              <span className="text-[#9A7B4F]" aria-hidden="true">—</span>
+              <span className="text-accent-gold" aria-hidden="true">—</span>
               <span className="text-text-secondary">{b}</span>
             </div>
           ))}
@@ -385,11 +391,11 @@ export default function JidokaLandingPage() {
       {/* One system */}
       <Section className="mt-24">
         <div className="mx-auto max-w-2xl text-center">
-          <Eyebrow>One System, Five Assistants</Eyebrow>
+          <Eyebrow>One Core, Industry-Specific Assistants</Eyebrow>
           <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">An assistant for every obstacle.</h2>
           <p className="mt-4 leading-relaxed text-text-secondary">
-            JIDOKA Cosmetics OS puts intelligent assistants on the work that drains your day — and lets you add,
-            remove, and customize each one to fit how your salon actually runs.
+            JIDOKA Beauty &amp; Wellness OS puts intelligent assistants on the work that drains your day,
+            while a human implementation specialist helps your team adopt the system at a realistic pace.
           </p>
         </div>
         <AssistantRobotShowcase />
@@ -405,7 +411,7 @@ export default function JidokaLandingPage() {
           <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">See it in your brand — every feature.</h2>
           <p className="mt-4 leading-relaxed text-text-secondary">
             Drop in your website or Instagram. We pull your logo, colors, and fonts, then walk you through
-            booking, wallet checkout, retail, the receptionist assistant, inventory, and the Assistants tab — themed to you.
+            booking, wallet checkout, retail, receptionist support, inventory, and the Assistants tab, themed to you.
           </p>
         </div>
         <BrandThemedDemo />
@@ -462,7 +468,7 @@ export default function JidokaLandingPage() {
           <Eyebrow>Your savings calculator</Eyebrow>
           <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">See it against your own numbers.</h2>
           <p className="mt-4 leading-relaxed text-text-secondary">
-            Enter your salon&apos;s figures to see card fees, wallet savings, and revenue lift measured against your total revenue.
+            Enter your business figures to see card fees, wallet savings, and revenue lift measured against your total revenue.
           </p>
         </div>
         <div className="mx-auto max-w-3xl">
@@ -480,8 +486,8 @@ export default function JidokaLandingPage() {
             <Eyebrow>Launch sequence</Eyebrow>
             <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">From demo to operating system.</h2>
             <p className="mt-5 text-sm leading-relaxed text-text-secondary">
-              Start with the fee-savings wedge, then switch on assistants one by one as more of the salon moves
-              onto the platform — at your pace.
+              Start with the clearest operational pressure, then switch on assistants one by one as more of the business
+              moves onto the platform at your pace.
             </p>
           </div>
           <div className="space-y-3">
@@ -500,52 +506,51 @@ export default function JidokaLandingPage() {
       {/* Final CTA */}
       <Section className="mt-28 mb-24">
         <div className="rounded-lg border border-border bg-surface-elevated px-6 py-12 text-center">
-          <Eyebrow>7-day guided trial</Eyebrow>
+          <Eyebrow>Guided implementation</Eyebrow>
           <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">
-            Test it out with your team. Start a 7-day free trial.
+            Map the system first. Implement it with a human specialist.
           </h2>
           <p className="mx-auto mt-4 max-w-xl leading-relaxed text-text-secondary">
-            An implementation specialist will assist you and your business through the next 7 days so your team can
-            explore the system, give feedback, and see where it saves time first.
+            JIDOKA helps connect the tools you already use, configure the platform around your workflows, and train your team over time.
           </p>
           <div className="mt-8 flex justify-center">
-            <TrialButton label="Start 7-day free trial" />
+            <TrialButton label="Start the Blueprint Diagnostic" />
           </div>
         </div>
       </Section>
 
-      {/* Built by salon owners */}
+      {/* Built from real operators */}
       <Section className="mb-24">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
-          <PhotoFrame caption="Founders / your team at work" ratioClass="aspect-[4/5]" className="max-w-md" />
+          <PhotoFrame caption="Beauty & wellness operators at work" ratioClass="aspect-[4/5]" className="max-w-md" />
           <div>
             <Eyebrow>Our story</Eyebrow>
             <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">
-              Built by salon owners,
-              <span className="block">for salon owners.</span>
+              Built from real beauty,
+              <span className="block">wellness, and service operations.</span>
             </h2>
             <p className="mt-5 leading-relaxed text-text-secondary">
-              We lived the 3% card fees, the missed calls during a color, and the juggling of ten tools that
-              never talked to each other. So we built the platform we wished we had — one that protects your
-              margin, fills your chairs, and feels as considered as the work you do.
+              The pressure is familiar: payment fees, missed calls, empty appointment slots, messy inventory,
+              review management, and too many tools that never talk to each other. JIDOKA turns that pressure
+              into one operating layer your team can actually use.
             </p>
             <p className="mt-4 leading-relaxed text-text-secondary">
-              Every feature started as a problem on our own salon floor. Nothing here is theoretical.
+              The technology matters. The human implementation matters just as much.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href={CRYSTAL_CALENDLY_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-sm bg-gradient-brand px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
+                className="rounded-md bg-gradient-brand px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
               >
-                Schedule a call with Crystal
+                Schedule a call
               </a>
               <a
-                href="/about"
-                className="rounded-sm border border-text-primary/30 px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-text-primary transition-colors hover:bg-black/[0.04]"
+                href={BEAUTY_WELLNESS_OS_URL}
+                className="rounded-md border border-text-primary/30 px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-text-primary transition-colors hover:border-primary hover:text-primary"
               >
-                Read Crystal&apos;s story
+                View Beauty &amp; Wellness OS
               </a>
             </div>
           </div>
@@ -573,7 +578,7 @@ export default function JidokaLandingPage() {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-xs text-text-muted">JIDOKA Cosmetics OS — an assistant for every salon obstacle.</p>
+          <p className="mt-8 text-xs text-text-muted">JIDOKA Beauty &amp; Wellness OS — built for spas, salons, medspas, and wellness clinics.</p>
         </Section>
       </footer>
     </main>

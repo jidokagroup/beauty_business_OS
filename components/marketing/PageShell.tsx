@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-/** Shared chrome for the JIDOKA feature/assistant pages — wordmark header + titled section. */
+/** Shared chrome for the JIDOKA Beauty & Wellness feature/assistant pages. */
 export default function PageShell({
   eyebrow,
   title,
@@ -21,7 +21,7 @@ export default function PageShell({
       <header className="border-b border-border">
         <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-5">
           <Link href="/" className="font-serif text-lg tracking-wide">
-            JIDOKA <span className="text-text-secondary">Cosmetics OS</span>
+            JIDOKA <span className="text-text-secondary">Beauty &amp; Wellness OS</span>
           </Link>
           <Link href="/" className="text-[12px] uppercase tracking-[0.14em] text-text-secondary hover:text-text-primary">
             Back to overview

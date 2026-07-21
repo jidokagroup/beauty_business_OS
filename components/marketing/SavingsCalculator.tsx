@@ -1,10 +1,10 @@
 "use client";
 /**
- * SavingsCalculator — two-tab ROI tool for the salon landing page.
+ * SavingsCalculator — two-tab ROI tool for the Beauty & Wellness landing page.
  *   Tab 1 (Fee savings): credit-card processing fees today vs. with ACH wallets.
  *   Tab 2 (Revenue lift): extra-visit revenue from retention + breakage − promo cost.
  * A "Total annual revenue" anchor card sits above the tabs so every other figure
- * can be read against the salon's overall revenue. Conservative on purpose:
+ * can be read against the business's overall revenue. Conservative on purpose:
  * wallet bonus credit is costed at full face value.
  */
 import { useEffect, useMemo, useState } from "react";
@@ -14,13 +14,13 @@ import {
 
 const fmt = (n: number) => "$" + Math.round(n).toLocaleString();
 
-const INK = "#161615";
-const CLAY = "#B05B49";
-const SAGE = "#4B7A63";
-const SAGE_LIGHT = "#7BA890";
-const GOLD = "#9A7B4F";
-const MUTED = "#A39A8D";
-const LABEL = "#6E665C";
+const INK = "#16181D";
+const CLAY = "#E8442E";
+const SAGE = "#0F766E";
+const SAGE_LIGHT = "#14B8A6";
+const GOLD = "#E8971F";
+const MUTED = "#8B90A0";
+const LABEL = "#4B5162";
 
 function Slider({
   label, value, suffix, min, max, step, onChange,
@@ -58,7 +58,7 @@ function Metric({ label, value, tone = "default" }: { label: string; value: stri
   );
 }
 
-const tooltipStyle = { background: "#FFFFFF", border: "1px solid #E6E0D6", borderRadius: 8, color: "#1A1815" };
+const tooltipStyle = { background: "#FFFFFF", border: "1px solid rgba(22,24,29,0.14)", borderRadius: 8, color: "#16181D" };
 
 export default function SavingsCalculator() {
   const [mounted, setMounted] = useState(false);
@@ -114,7 +114,7 @@ export default function SavingsCalculator() {
 
   return (
     <div className="rounded-xl border border-border bg-surface p-6">
-      <p className="text-xs uppercase tracking-[0.18em] text-text-muted mb-3">Your salon</p>
+      <p className="text-xs uppercase tracking-[0.18em] text-text-muted mb-3">Your business</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
         <Slider label="Active clients" value={cli} suffix={`${cli}`} min={20} max={2000} step={10} onChange={setCli} />
         <Slider label="Avg ticket" value={tic} suffix={`$${tic}`} min={20} max={400} step={5} onChange={setTic} />

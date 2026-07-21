@@ -1,38 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light, minimal luxury palette (Crème de la Mer-inspired) */
-  --color-bg: #FFFFFF;
+  /* JIDOKA Group blueprint palette */
+  --color-bg: #FAFAF7;
   --color-surface: #FFFFFF;
-  --color-surface-elevated: #F6F2EC;   /* warm linen for cards/sections */
-  --color-linen: #EFE9E0;              /* photo placeholders */
-  --color-border: #E6E0D6;
+  --color-surface-elevated: #F1F1EB;
+  --color-linen: #E9EBF6;
+  --color-border: rgba(22, 24, 29, 0.14);
 
-  /* Ink accent (used for primary buttons) */
-  --color-primary: #161615;
-  --color-accent-gold: #9A7B4F;
+  --color-primary: #3041A5;
+  --color-accent-gold: #E8971F;
 
   /* Text */
-  --color-text-primary: #1A1815;
-  --color-text-secondary: #6E665C;
-  --color-text-muted: #A39A8D;
+  --color-text-primary: #16181D;
+  --color-text-secondary: #4B5162;
+  --color-text-muted: #8B90A0;
 
-  /* Semantic — softened for a luxury feel */
-  --color-success: #4B7A63;   /* sage */
-  --color-warning: #9C7A3C;
-  --color-error: #B05B49;     /* clay */
+  --color-success: #0F766E;
+  --color-warning: #E8971F;
+  --color-error: #E8442E;
 
   /* Legacy aliases kept so existing classes resolve */
   --color-charcoal: #FFFFFF;
 
-  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-data: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #1A1815;
-  --gradient-brand: #161615;
+  --background: #FAFAF7;
+  --foreground: #16181D;
+  --gradient-brand: #3041A5;
+  --draft-grid: rgba(48, 65, 165, 0.055);
 }
 
 * { box-sizing: border-box; }
@@ -41,26 +41,30 @@ html { scroll-behavior: smooth; }
 
 body {
   background: var(--background);
+  background-image:
+    linear-gradient(var(--draft-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--draft-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D8D1C5; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #B8AF9F; }
+::-webkit-scrollbar-thumb { background: rgba(48, 65, 165, 0.22); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(48, 65, 165, 0.34); }
 
-::selection { background: rgba(20,20,18,0.10); color: #1A1815; }
+::selection { background: rgba(48, 65, 165, 0.18); color: #16181D; }
 
-/* Primary button = solid ink (kept under the old class name) */
+/* Primary button kept under the old class name for existing components. */
 .bg-gradient-brand { background: var(--gradient-brand); }
 
-/* Soft linen placeholder for photo areas */
 .photo-frame {
   background-color: var(--color-linen);
-  background-image: linear-gradient(135deg, #F2ECE3 0%, #E9E2D6 100%);
+  background-image: linear-gradient(135deg, rgba(48,65,165,0.08) 0%, rgba(232,68,46,0.05) 100%);
 }
 
 .assistant-robot-stage {

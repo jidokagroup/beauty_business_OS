@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     website: website || null,
     priority: priority || null,
     message: message || null,
-    source: (body.source ?? 'salons-landing').trim() || 'salons-landing',
+    source: (body.source ?? 'beauty-wellness-landing').trim() || 'beauty-wellness-landing',
     created_at: new Date().toISOString(),
   }
 
@@ -67,8 +67,8 @@ export async function POST(request: NextRequest) {
     page_name: lead.salon_name,
     concern_type: 'Demo request',
     message:
-      `New demo request from the salon landing page.\n\n` +
-      `Salon: ${lead.salon_name || 'N/A'}\n` +
+      `New demo request from the Beauty & Wellness OS landing page.\n\n` +
+      `Business: ${lead.salon_name || 'N/A'}\n` +
       `Website: ${lead.website || 'N/A'}\n` +
       `Phone: ${lead.phone || 'N/A'}\n` +
       `Priority: ${lead.priority || 'N/A'}\n\n` +
