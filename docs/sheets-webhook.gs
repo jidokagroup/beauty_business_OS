@@ -1,70 +1,244 @@
 /**
- * Google Apps Script — demo-request lead capture for the salon platform.
+ * Luna & Sage Demo OS Google Sheets webhook
  *
- * Setup (one time, ~5 min):
- *   1. Create a Google Sheet (sheets.new) and copy its ID from the URL:
- *        https://docs.google.com/spreadsheets/d/<THIS_IS_THE_ID>/edit
- *      Paste it into SHEET_ID below.
- *   2. Apps Script editor: paste this file, Save.
- *   3. (Optional) set SECRET to match SHEETS_WEBHOOK_SECRET in your app env.
- *   4. Deploy → New deployment → "Web app" (Execute as: Me, Access: Anyone).
- *      Authorize when prompted, copy the Web app URL (ends in /exec).
- *   5. Put that URL in your app env as SHEETS_WEBHOOK_URL.
+ * This is the endpoint for Netlify's SHEETS_WEBHOOK_URL.
  *
- * Using openById (not getActiveSpreadsheet) means this works whether the script
- * is standalone or bound to the sheet.
+ * Setup:
+ *   1. Create a Google Sheet named "Luna & Sage Demo OS Database".
+ *   2. In that Sheet, go to Extensions -> Apps Script.
+ *   3. Paste this file into Code.gs and save.
+ *   4. Optional: Project Settings -> Script Properties:
+ *        SHEETS_WEBHOOK_SECRET = the same value you add in Netlify
+ *        SPREADSHEET_ID = optional fallback Sheet ID if this script is standalone
+ *   5. Deploy -> New deployment -> Web app.
+ *        Execute as: Me
+ *        Who has access: Anyone
+ *   6. Copy the Web app URL ending in /exec and add it to Netlify as:
+ *        SHEETS_WEBHOOK_URL
+ *   7. Add the Sheet ID from the Sheet URL to Netlify as:
+ *        SHEETS_SHEET_ID
  */
 
-var SHEET_ID = 'PASTE_YOUR_SHEET_ID_HERE'; // from the sheet URL between /d/ and /edit
-var SHEET_NAME = ''; // '' = first tab, or set a specific tab name
-var SECRET = ''; // must match SHEETS_WEBHOOK_SECRET (or '' to disable)
-var HEADERS = ['Timestamp', 'Name', 'Email', 'Salon', 'Phone', 'Website', 'Priority', 'Notes', 'Source'];
+function doGet(e) {
+  var tab = e && e.parameter && e.parameter.tab ? cleanName_(e.parameter.tab) : '';
+  if (tab) {
+    verifySecret_({ secret: e && e.parameter ? e.parameter.secret : '' });
+    return json_({
+      ok: true,
+      tab: tab,
+      rows: readRows_(tab),
+      time: new Date().toISOString()
+    });
+  }
+
+  return json_({
+    ok: true,
+    app: 'Luna & Sage Demo OS Sheets Webhook',
+    time: new Date().toISOString()
+  });
+}
 
 function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    var payload = parsePayload_(e);
+    verifySecret_(payload);
 
-    if (SECRET && data.secret !== SECRET) {
-      return json({ ok: false, error: 'unauthorized' });
-    }
+    var write = normalizeWrite_(payload);
+    var sheet = getOrCreateSheet_(write.tab);
+    ensureHeaders_(sheet, write.headers);
+    var appended = appendMappedRows_(sheet, write.headers, write.rows);
 
-    var ss = SpreadsheetApp.openById(SHEET_ID);
-
-    // Structured path: write a row to a named tab (financial agent, etc.).
-    // Body: { tab: "Staff", headers: [...], row: [...] }
-    if (data.tab && data.row) {
-      var tab = ss.getSheetByName(data.tab) || ss.insertSheet(data.tab);
-      if (tab.getLastRow() === 0 && data.headers) {
-        tab.appendRow(data.headers);
-      }
-      tab.appendRow(data.row);
-      return json({ ok: true });
-    }
-
-    // Default path: demo-request lead append to the Leads / first tab.
-    var sheet = (SHEET_NAME && ss.getSheetByName(SHEET_NAME)) || ss.getSheets()[0];
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(HEADERS);
-    }
-
-    sheet.appendRow([
-      data.created_at || new Date().toISOString(),
-      data.name || '',
-      data.email || '',
-      data.salon_name || '',
-      data.phone || '',
-      data.website || '',
-      data.priority || '',
-      data.message || '',
-      data.source || '',
-    ]);
-
-    return json({ ok: true });
+    return json_({
+      ok: true,
+      tab: write.tab,
+      appended: appended,
+      time: new Date().toISOString()
+    });
   } catch (err) {
-    return json({ ok: false, error: String(err) });
+    return json_({
+      ok: false,
+      error: err && err.message ? err.message : String(err)
+    });
   }
 }
 
-function json(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+function parsePayload_(e) {
+  if (!e || !e.postData || !e.postData.contents) {
+    throw new Error('Missing POST body');
+  }
+
+  try {
+    return JSON.parse(e.postData.contents);
+  } catch (err) {
+    throw new Error('POST body must be JSON');
+  }
+}
+
+function verifySecret_(payload) {
+  var expected = PropertiesService.getScriptProperties().getProperty('SHEETS_WEBHOOK_SECRET');
+  if (!expected) return;
+
+  if (!payload || payload.secret !== expected) {
+    throw new Error('Invalid webhook secret');
+  }
+}
+
+function normalizeWrite_(payload) {
+  if (payload.tab && payload.headers && (payload.row || payload.rows)) {
+    if (!Array.isArray(payload.headers)) throw new Error('headers must be an array');
+    if (payload.row && !Array.isArray(payload.row)) throw new Error('row must be an array');
+    if (payload.rows && !Array.isArray(payload.rows)) throw new Error('rows must be an array');
+
+    var rows = payload.rows || [payload.row];
+    rows.forEach(function (row) {
+      if (!Array.isArray(row)) throw new Error('each rows item must be an array');
+    });
+
+    return {
+      tab: cleanName_(payload.tab),
+      headers: payload.headers.map(String),
+      rows: rows
+    };
+  }
+
+  return normalizeLead_(payload);
+}
+
+function normalizeLead_(payload) {
+  var headers = [
+    'Created',
+    'Salon',
+    'Name',
+    'Email',
+    'Phone',
+    'Website',
+    'Instagram',
+    'Source',
+    'Notes',
+    'Raw'
+  ];
+
+  return {
+    tab: cleanName_(payload.tab || 'Leads'),
+    headers: headers,
+    rows: [[
+      payload.created_at || payload.createdAt || new Date().toISOString(),
+      payload.salonName || payload.salon_name || payload.salon || '',
+      payload.name || '',
+      payload.email || '',
+      payload.phone || '',
+      payload.website || '',
+      payload.instagram || '',
+      payload.source || 'website',
+      payload.notes || payload.message || '',
+      JSON.stringify(payload)
+    ]]
+  };
+}
+
+function cleanName_(name) {
+  var value = String(name || '').trim();
+  if (!value) throw new Error('tab is required');
+
+  return value.substring(0, 99).replace(/[\\/?*\[\]:]/g, '-');
+}
+
+function getOrCreateSheet_(name) {
+  var ss = getSpreadsheet_();
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) sheet = ss.insertSheet(name);
+  return sheet;
+}
+
+function getSpreadsheet_() {
+  var id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+  if (id) return SpreadsheetApp.openById(id);
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error('Open this script from inside the Google Sheet or set SPREADSHEET_ID in Script Properties');
+  }
+  return ss;
+}
+
+function ensureHeaders_(sheet, headers) {
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    formatHeader_(sheet, headers.length);
+    return;
+  }
+
+  var width = Math.max(sheet.getLastColumn(), headers.length);
+  var current = sheet.getRange(1, 1, 1, width).getValues()[0].map(function (value) {
+    return String(value || '').trim();
+  });
+
+  var changed = false;
+  headers.forEach(function (header) {
+    if (current.indexOf(header) === -1) {
+      current.push(header);
+      changed = true;
+    }
+  });
+
+  if (changed) {
+    sheet.getRange(1, 1, 1, current.length).setValues([current]);
+    formatHeader_(sheet, current.length);
+  }
+}
+
+function appendMappedRows_(sheet, headers, rows) {
+  if (!rows || rows.length === 0) return 0;
+
+  var currentHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(function (value) {
+    return String(value || '').trim();
+  });
+
+  var values = rows.map(function (row) {
+    return currentHeaders.map(function (header) {
+      var idx = headers.indexOf(header);
+      return idx >= 0 ? row[idx] : '';
+    });
+  });
+
+  sheet.getRange(sheet.getLastRow() + 1, 1, values.length, currentHeaders.length).setValues(values);
+  return values.length;
+}
+
+function readRows_(tab) {
+  var ss = getSpreadsheet_();
+  var sheet = ss.getSheetByName(tab);
+  if (!sheet || sheet.getLastRow() < 2 || sheet.getLastColumn() < 1) return [];
+
+  var values = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+  var headers = values[0].map(function (value) {
+    return String(value || '').trim();
+  });
+
+  return values.slice(1).map(function (row) {
+    var obj = {};
+    headers.forEach(function (header, index) {
+      if (!header) return;
+      var value = row[index];
+      if (Object.prototype.toString.call(value) === '[object Date]') {
+        obj[header] = value.toISOString();
+      } else {
+        obj[header] = value == null ? '' : String(value);
+      }
+    });
+    return obj;
+  });
+}
+
+function formatHeader_(sheet, width) {
+  var range = sheet.getRange(1, 1, 1, width);
+  range.setFontWeight('bold');
+  range.setBackground('#f6f2ec');
+  sheet.setFrozenRows(1);
+}
+
+function json_(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }

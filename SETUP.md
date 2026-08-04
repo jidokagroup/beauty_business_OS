@@ -22,7 +22,7 @@ Environment variables). Most features degrade gracefully if a key is missing.
 | `STRIPE_CONNECT_CLIENT_ID` | Stripe Connect OAuth | Stripe dashboard → Connect → Settings (`ca_…`) | optional, for payments |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Checkout | Stripe dashboard → API keys (`pk_…`) | optional |
 | `NEXT_PUBLIC_STRIPE_SUBSCRIPTION_URL` | 7-day trial CTA | Stripe Payment Link / subscription checkout URL | optional, for trial CTA |
-| `NEXT_PUBLIC_CRYSTAL_CALENDLY_URL` | Schedule a call with Crystal CTA | Crystal's Calendly booking link | optional |
+| `NEXT_PUBLIC_CONTACT_CALENDLY_URL` | Schedule a call CTA | Public Calendly booking link | optional |
 | `STRIPE_WEBHOOK_SECRET` | Crediting the wallet on load | Stripe → Developers → Webhooks (`whsec_…`) | optional, for wallet |
 | `BRANDFETCH_API_KEY` | Brand-theming demo | [developers.brandfetch.com](https://developers.brandfetch.com) | ✅ you have it |
 | `RESEND_API_KEY` | All email notifications | [resend.com](https://resend.com) | ✅ you have it |
@@ -102,7 +102,7 @@ Three endpoints should run daily. Easiest free option: [cron-job.org](https://cr
 
 ## 4. Deploy to Netlify
 
-1. Netlify → **Add new site → Import from Git** → pick `Salon_platform_w_Mark`.
+1. Netlify → **Add new site → Import from Git** → pick `beauty_business_OS`.
 2. Build command `npm run build`; the `@netlify/plugin-nextjs` runtime is in `netlify.toml`.
 3. Add all the env vars from section 1.
 4. After it's live, set `NEXT_PUBLIC_APP_URL` to the real URL and set up the crons (section 3).
@@ -132,7 +132,7 @@ Three endpoints should run daily. Easiest free option: [cron-job.org](https://cr
 
 ## 6. Still to build (need real integrations / decisions)
 
-These were in the spec but require external services, approvals, or Mark's booking data:
+These were in the spec but require external services, approvals, or demo booking data:
 
 | Feature | What it needs |
 |---|---|
@@ -144,7 +144,7 @@ These were in the spec but require external services, approvals, or Mark's booki
 | **Upsell cues** | Per-client visit/POS history (comes from the booking system) |
 | **AUTOM8 marketing suite** (smart schedule, analytics, Brand Brain, comment→DM; TikTok/LinkedIn) | Integrate the existing Autom8 systems, re-branded to JIDOKA |
 | **Scheduled promotion sends** | ✅ Owner reminder MVP built (`/api/promotion/send`). Remaining: verified sender domain, audience lists, direct email/SMS sends |
-| **Booking / POS / calendar core** | Mark's GitHub platform modules are merged here. Remaining: import/live-sync appointment calendar, service menu, staff schedule, and POS history when Mark's booking data source is available |
+| **Booking / POS / calendar core** | source platform modules are merged here. Remaining: import/live-sync appointment calendar, service menu, staff schedule, and POS history when demo booking data source is available |
 
 **Recommended next:** the Stripe ACH wallet — it's the headline value prop and the
 one feature that genuinely warrants a real database (Supabase free tier or similar)

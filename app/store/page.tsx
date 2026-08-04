@@ -4,7 +4,7 @@ import Storefront from "@/components/store/Storefront";
 import { readSheetTab } from "@/lib/gviz";
 
 export const metadata: Metadata = {
-  title: "Shop — JIDOKA Cosmetics OS",
+  title: "Shop — Luna & Sage Demo OS",
   description: "Buy your salon's at-home products online — checkout settles to the salon's own Stripe.",
 };
 
@@ -16,21 +16,21 @@ const SAMPLE_PRODUCTS = [
     price: 38,
     description: "Color-safe hydration clients can use between gloss appointments.",
     image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80",
-    inventory: 18,
+    inventory: 18, threshold: 10,
   },
   {
     name: "Scalp Reset Serum",
     price: 42,
     description: "A lightweight scalp treatment to attach to refresh appointments.",
     image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=900&q=80",
-    inventory: 11,
+    inventory: 11, threshold: 10,
   },
   {
     name: "Silk Finish Oil",
     price: 34,
     description: "The take-home finish for smooth styling after color services.",
     image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=80",
-    inventory: 24,
+    inventory: 24, threshold: 10,
   },
 ];
 
@@ -56,6 +56,7 @@ export default async function StorePage({
         description: r.Description || "",
         image: r.Image || "",
         inventory: Number(r.InitialInventory || r.Inventory) || undefined,
+        threshold: Number(r.ReorderThreshold || r.Threshold) || 10,
       }))
       .filter((p) => p.name && p.price > 0);
 
@@ -66,6 +67,7 @@ export default async function StorePage({
       intro="Sell your at-home products online and ring up retail in-salon from the same catalog. Checkout settles directly to the salon's own Stripe — extend the experience and the revenue between visits."
       note={demo ? "Sample mode: products and purchases are simulated for the live demo." : "Products live in a Products tab; orders are recorded to an Orders tab via the Stripe webhook. Shop a specific salon with ?salon=Name in the URL."}
       showBottomBack
+      publicPage
     >
       {purchased && <p className="mb-5 rounded-md border border-success/40 bg-success/10 px-4 py-3 text-sm text-success">Thank you for your order!</p>}
       <Storefront products={products} salon={salon} demo={demo} />

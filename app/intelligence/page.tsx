@@ -4,7 +4,7 @@ import IntelligenceReport from "@/components/agents/IntelligenceReport";
 import { requireSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Industry intelligence — JIDOKA Cosmetics OS",
+  title: "Industry intelligence — Luna & Sage Demo OS",
   description: "A monthly, executive one-page briefing on what's trending and what competitors are doing in your niche.",
 };
 

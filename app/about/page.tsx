@@ -5,7 +5,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "About — JIDOKA Cosmetics OS",
   description:
-    "About Crystal Thuy Dong, JIDOKA Group, and the consulting plus implementation mission behind JIDOKA Cosmetics OS.",
+    "About Maya Brooks, JIDOKA Group, and the consulting plus implementation mission behind JIDOKA Cosmetics OS.",
 };
 
 function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -37,7 +37,7 @@ export default function AboutPage() {
             Built from almost a decade inside beauty businesses.
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-text-secondary">
-            Crystal Thuy Dong has been building full-service salons since 2017, giving her a direct view into
+            Maya Brooks has been building full-service salons since 2017, giving her a direct view into
             the operational pressure that cosmetic businesses face at every stage.
           </p>
         </div>
@@ -46,10 +46,10 @@ export default function AboutPage() {
       <Section className="pb-20">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.85fr_1.15fr]">
           <div className="rounded-md border border-border bg-surface-elevated p-6">
-            <Eyebrow>Crystal Thuy Dong</Eyebrow>
+            <Eyebrow>Maya Brooks</Eyebrow>
             <h2 className="mt-3 font-serif text-3xl font-medium">Founder, operator, educator, builder.</h2>
             <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-              Crystal&apos;s work spans salon ownership, education, marketing, product partnerships, and business
+              Maya&apos;s work spans salon ownership, education, marketing, product partnerships, and business
               implementation. That range is what shapes JIDOKA Cosmetics OS: practical systems built for real
               teams, not theory.
             </p>
@@ -57,7 +57,7 @@ export default function AboutPage() {
 
           <div className="space-y-5 text-sm leading-relaxed text-text-secondary">
             <p>
-              Since 2017, Crystal has built and operated full-service salons, served as an international educator
+              Since 2017, Maya has built and operated full-service salons, served as an international educator
               for Socolashes California, spoken at beauty conferences, sold online courses, and received mentorship
               through industry experts from New York and Los Angeles.
             </p>
@@ -66,7 +66,7 @@ export default function AboutPage() {
               platforms including Illumino, PMD, Dermalogica, Beautifulwandz, and LashCon.
             </p>
             <p>
-              Crystal also ran a marketing agency for five years, servicing salons, spas, medspas, and plastic
+              Maya also ran a marketing agency for five years, servicing salons, spas, medspas, and plastic
               surgeons. When it comes to the struggles cosmetic businesses deal with, that almost-decade of
               experience means she understands the path from solopreneur to enterprise level.
             </p>

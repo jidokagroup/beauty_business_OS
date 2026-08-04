@@ -1,7 +1,7 @@
 # JIDOKA Cosmetics OS
 
 A customizable operating system for salons, spas, and medspas — sold as a
-white-label platform. Mark's GitHub code is now the core app in this repo:
+white-label platform. the source platform code is now the core app in this repo:
 owner login, wallet/POS flows, store checkout, inventory, financials, retention,
 reviews, promotions, waitlist/opening alerts, and the marketing/demo layer.
 
@@ -12,7 +12,7 @@ reviews, promotions, waitlist/opening alerts, and the marketing/demo layer.
   CTAs.
 - **Owner dashboard** (`app/account/page.tsx`) — passwordless sign-in routes the
   salon owner into the live modules.
-- **Mark's platform modules** — client wallet, Stripe Connect, online store,
+- **Source platform modules** — client wallet, Stripe Connect, online store,
   financial agent, inventory agent, industry intelligence, re-engagement, reviews,
   rewards/promos, waitlist opt-in, and last-minute opening alerts.
 - **Savings calculator** (`components/marketing/SavingsCalculator.tsx`) — two tabs:
@@ -63,7 +63,7 @@ schema is kept in `supabase/migrations/` for reference if you later move to Post
 
 ## Roadmap
 
-- Booking/calendar imports from Mark's live booking data, when available.
+- Booking/calendar imports from demo booking data, when available.
 - Production database for wallet ledger, inventory sync, and multi-salon scale.
 - Retell.ai voice agent for inbound calls.
 - Marketing automation (Autom8 integration).

@@ -4,7 +4,7 @@ import FinancialAgent from "@/components/agents/FinancialAgent";
 import { requireSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Financial Assistant — JIDOKA Cosmetics OS",
+  title: "Financial Assistant — Luna & Sage Demo OS",
   description:
     "Talk to your salon's financial assistant: set commission rates, run payroll, and get plain-English advice to improve your bottom line.",
 };
@@ -16,10 +16,10 @@ export default async function FinancialsPage() {
       <header className="border-b border-border">
         <div className="max-w-6xl mx-auto flex h-16 items-center justify-between px-5">
           <Link href="/" className="font-serif text-lg tracking-wide">
-            JIDOKA <span className="text-text-secondary">Cosmetics OS</span>
+            Luna & Sage Studio <span className="text-text-secondary">OS</span>
           </Link>
-          <Link href="/" className="text-[12px] uppercase tracking-[0.14em] text-text-secondary hover:text-text-primary">
-            Back to overview
+          <Link href="/dashboard" className="text-[12px] uppercase tracking-[0.14em] text-text-secondary hover:text-text-primary">
+            Back to dashboard
           </Link>
         </div>
       </header>
@@ -40,8 +40,8 @@ export default async function FinancialsPage() {
         </div>
 
         <p className="mt-4 text-xs text-text-muted leading-relaxed">
-          The assistant works from the figures you give it (it has no live access to your bank or POS). Commission
-          settings save to a Staff tab and payroll runs to a Payroll tab in your sheet.
+          The assistant can use imported FinancialReports rows from your Google Sheet plus any figures you give it.
+          Commission settings save to a Staff tab and payroll runs to a Payroll tab in your sheet.
         </p>
       </section>
     </main>

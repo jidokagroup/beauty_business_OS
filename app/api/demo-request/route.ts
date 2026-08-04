@@ -8,6 +8,7 @@
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { sendHelpEmail } from '@/lib/notify'
+import { getSheetsWebhookUrl } from '@/lib/sheets'
 
 type SinkResult = { ok: boolean; skipped?: boolean; error?: string }
 
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
     website: website || null,
     priority: priority || null,
     message: message || null,
-    source: (body.source ?? 'beauty-wellness-landing').trim() || 'beauty-wellness-landing',
+    source: (body.source ?? 'salons-landing').trim() || 'salons-landing',
     created_at: new Date().toISOString(),
   }
 
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
   // accounts and we don't need the body — so we don't follow the redirect; the
   // 302 itself confirms doPost executed and appended the row.
   let sheet: SinkResult = { ok: false, skipped: true }
-  const webhook = process.env.SHEETS_WEBHOOK_URL
+  const webhook = getSheetsWebhookUrl()
   if (webhook) {
     try {
       const res = await fetch(webhook, {
@@ -67,8 +68,8 @@ export async function POST(request: NextRequest) {
     page_name: lead.salon_name,
     concern_type: 'Demo request',
     message:
-      `New demo request from the Beauty & Wellness OS landing page.\n\n` +
-      `Business: ${lead.salon_name || 'N/A'}\n` +
+      `New demo request from the salon landing page.\n\n` +
+      `Salon: ${lead.salon_name || 'N/A'}\n` +
       `Website: ${lead.website || 'N/A'}\n` +
       `Phone: ${lead.phone || 'N/A'}\n` +
       `Priority: ${lead.priority || 'N/A'}\n\n` +
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest) {
   // Captured as long as at least one sink accepted the lead.
   if (!sheet.ok && !notify.ok) {
     return NextResponse.json(
-      { error: 'Lead could not be saved — no storage configured. Set SHEETS_WEBHOOK_URL or RESEND_API_KEY.' },
+      { error: 'Lead could not be saved. Check the Google Sheets webhook or Resend configuration.' },
       { status: 502 },
     )
   }

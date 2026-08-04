@@ -1,9 +1,8 @@
 import SavingsCalculator from "@/components/marketing/SavingsCalculator";
 import BrandThemedDemo from "@/components/marketing/BrandThemedDemo";
-import DemoCTA from "@/components/marketing/DemoCTA";
 import Image from "next/image";
 
-const BEAUTY_WELLNESS_OS_URL = "https://jidokagroup.com/operating-systems#beauty-wellness";
+const DEMO_URL = "/demo";
 const DIAGNOSTIC_URL = "https://jidokagroup.com/scan/quiz";
 
 const BOTTLENECKS = [
@@ -113,7 +112,10 @@ const CLIENT_NOTIFICATIONS = [
   "Wallet balance low. You are 50 points away from your next reward.",
 ];
 
-const CRYSTAL_CALENDLY_URL = process.env.NEXT_PUBLIC_CRYSTAL_CALENDLY_URL || "https://calendly.com/hello-barebranding/30min";
+const CONTACT_CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CONTACT_CALENDLY_URL ||
+  process.env.NEXT_PUBLIC_CRYSTAL_CALENDLY_URL ||
+  "https://calendly.com/hello-barebranding/30min";
 
 function Section({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   return <section id={id} className={`max-w-6xl mx-auto px-5 ${className}`}>{children}</section>;
@@ -123,7 +125,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="text-[11px] uppercase tracking-[0.24em] text-text-muted">{children}</p>;
 }
 
-function TrialButton({ label = "Map my business systems" }: { label?: string }) {
+function TrialButton({ label = "Map my business" }: { label?: string }) {
   return (
     <a
       href={DIAGNOSTIC_URL}
@@ -330,13 +332,18 @@ export default function JidokaLandingPage() {
             </span>
           </a>
           <div className="flex items-center gap-5">
-            <a href={BEAUTY_WELLNESS_OS_URL} className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-text-secondary hover:text-primary sm:inline">
+            <a href={DEMO_URL} className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-text-secondary hover:text-primary sm:inline">
               Beauty &amp; Wellness OS
             </a>
             <a href="/account" className="hidden text-[12px] font-semibold uppercase tracking-[0.14em] text-text-secondary hover:text-primary sm:inline">
               Sign in
             </a>
-            <DemoCTA label="Map my system" variant="outline" />
+            <a
+              href={DIAGNOSTIC_URL}
+              className="rounded-md border border-text-primary/30 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-text-primary transition-colors hover:border-primary hover:text-primary"
+            >
+              Map my business
+            </a>
           </div>
         </div>
       </header>
@@ -353,12 +360,12 @@ export default function JidokaLandingPage() {
             inventory, payroll, marketing, reviews, payments, and retention in one connected system.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <DemoCTA label="Map my Beauty & Wellness OS" variant="primary" />
+            <TrialButton label="Map my business" />
             <a
-              href={BEAUTY_WELLNESS_OS_URL}
+              href={DEMO_URL}
               className="rounded-md border border-text-primary/30 px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-text-primary transition-colors hover:border-primary hover:text-primary"
             >
-              View Beauty &amp; Wellness OS
+              View Demo
             </a>
           </div>
         </div>
@@ -539,7 +546,7 @@ export default function JidokaLandingPage() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a
-                href={CRYSTAL_CALENDLY_URL}
+                href={CONTACT_CALENDLY_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="rounded-md bg-gradient-brand px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
@@ -547,10 +554,10 @@ export default function JidokaLandingPage() {
                 Schedule a call
               </a>
               <a
-                href={BEAUTY_WELLNESS_OS_URL}
+                href={DEMO_URL}
                 className="rounded-md border border-text-primary/30 px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-text-primary transition-colors hover:border-primary hover:text-primary"
               >
-                View Beauty &amp; Wellness OS
+                View Demo
               </a>
             </div>
           </div>

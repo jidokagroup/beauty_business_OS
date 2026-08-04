@@ -1,7 +1,7 @@
 "use client";
 /**
  * BrandThemedDemo — pulls a prospect's brand from /api/brandfetch and re-skins
- * a miniature version of Mark's JIDOKA owner dashboard with their name, logo,
+ * a miniature version of the JIDOKA owner dashboard with their name, logo,
  * and colors. This should feel like the real platform, not a separate mockup.
  */
 import { useMemo, useState } from "react";

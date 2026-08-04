@@ -16,5 +16,7 @@ export function connectConfigured(): boolean {
 }
 
 export function appBaseUrl(fallback: string): string {
-  return process.env.NEXT_PUBLIC_APP_URL || fallback;
+  const raw = process.env.NEXT_PUBLIC_APP_URL || fallback;
+  const withProtocol = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  return withProtocol.replace(/\/$/, "");
 }

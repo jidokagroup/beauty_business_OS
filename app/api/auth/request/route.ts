@@ -13,10 +13,6 @@ import { appBaseUrl } from "@/lib/stripe";
 export const runtime = "nodejs";
 
 export async function POST(request: NextRequest) {
-  if (!process.env.AUTH_SECRET) {
-    return NextResponse.json({ error: "Auth isn't configured (AUTH_SECRET)." }, { status: 503 });
-  }
-
   const body = await request.json().catch(() => ({}));
   const email = (body.email ?? "").trim().toLowerCase();
   const salonInput = (body.salon ?? "").trim();

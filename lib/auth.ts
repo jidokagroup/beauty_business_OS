@@ -4,7 +4,8 @@
  * token in an httpOnly cookie. The salon/role ride inside the token, so the
  * callback doesn't need to re-read the sheet (avoids gviz lag).
  *
- * Needs AUTH_SECRET (any long random string).
+ * Set AUTH_SECRET in production. The public demo can create a scoped demo
+ * session without a magic link.
  */
 import crypto from "node:crypto";
 import { cookies } from "next/headers";
@@ -13,11 +14,22 @@ import { redirect } from "next/navigation";
 const MAGIC_TTL = 15 * 60 * 1000; // 15 min
 const SESSION_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days
 export const SESSION_COOKIE = "jcs_session";
+export const DEMO_SESSION_COOKIE = "jcs_demo_session";
+export const DEMO_SESSION: Session = {
+  email: "owner@demo.local",
+  salon: "Luna & Sage Studio",
+  role: "demo-owner",
+};
 
 export type Session = { email: string; salon: string; role: string };
 
 function secret(): string {
-  return process.env.AUTH_SECRET || "";
+  return (
+    process.env.AUTH_SECRET ||
+    process.env.NEXTAUTH_SECRET ||
+    process.env.SESSION_SECRET ||
+    "beauty-business-os-preview-session-secret-change-me"
+  );
 }
 
 function sign(payload: object): string {
@@ -27,7 +39,7 @@ function sign(payload: object): string {
 }
 
 function verify(token: string): Record<string, unknown> | null {
-  if (!secret() || !token) return null;
+  if (!token) return null;
   const [body, sig] = token.split(".");
   if (!body || !sig) return null;
   const expected = crypto.createHmac("sha256", secret()).update(body).digest("base64url");
@@ -68,6 +80,7 @@ export const SESSION_MAX_AGE = SESSION_TTL / 1000;
 /** Read the current session from the cookie (server components / route handlers). */
 export async function getSession(): Promise<Session | null> {
   const c = await cookies();
+  if (c.get(DEMO_SESSION_COOKIE)?.value === "1") return DEMO_SESSION;
   const token = c.get(SESSION_COOKIE)?.value;
   return token ? verifySession(token) : null;
 }

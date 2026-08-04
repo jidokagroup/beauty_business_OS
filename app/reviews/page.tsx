@@ -4,7 +4,7 @@ import ReviewForm from "@/components/agents/ReviewForm";
 import { readSheetTab } from "@/lib/gviz";
 
 export const metadata: Metadata = {
-  title: "Reviews Assistant — JIDOKA Cosmetics OS",
+  title: "Reviews Assistant — Luna & Sage Demo OS",
   description: "Every review from Google, the website, and old booking sites, gathered in one place with smart response workflows.",
 };
 
