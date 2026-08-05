@@ -62,7 +62,7 @@ export default function DemoPage() {
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.2em] text-text-muted">Business owner side</p>
-                <h2 className="mt-2 font-serif text-3xl font-medium tracking-normal">Dashboard and operations</h2>
+                <h2 className="mt-2 font-serif text-3xl font-medium tracking-normal">Dashboard and Operation Features</h2>
               </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
